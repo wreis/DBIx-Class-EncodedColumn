@@ -59,11 +59,11 @@ DBIx::Class::EncodedColumn::Crypt::Eksblowfish::Bcrypt
   __PACKAGE__->add_columns(
     'password' => {
       data_type => 'CHAR',
-      size      => 22,
+      size      => 59,
       encode_column => 1,
       encode_class  => 'Crypt::Eksblowfish::Bcrypt',
       encode_args   => { key_nul => 0, cost => 8 },
-      digest_check_method => 'check_password',
+      encode_check_method => 'check_password',
   }
 
 =head1 DESCRIPTION

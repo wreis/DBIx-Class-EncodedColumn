@@ -2,13 +2,14 @@
 
 # Load the Module::Install bundled in ./inc/
 use inc::Module::Install;
+use Module::Install::ReadmeFromPod;
 
 # Define metadata
 name 'DBIx-Class-EncodedColumn';
 abstract "Automatically encode column values";
 all_from 'lib/DBIx/Class/EncodedColumn.pm';
-
-repository 'http://dev.catalyst.perl.org/repos/bast/trunk/DBIx-Class-EncodedColumn';
+readme_from;
+repository 'git://github.com/wreis/DBIx-Class-EncodedColumn.git';
 
 # Specific dependencies
 requires 'DBIx::Class' => '0.06002';

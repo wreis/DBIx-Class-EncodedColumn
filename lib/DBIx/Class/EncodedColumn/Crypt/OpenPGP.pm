@@ -22,7 +22,7 @@ DBIx::Class::EncodedColumn::Crypt::OpenPGP - Encrypt columns using Crypt::OpenPG
         encode_args   => { 
             recipient => '7BEF6294',
         },
-        digest_check_method => 'decrypt_data',
+        encode_check_method => 'decrypt_data',
  };
 
  my $row = $schema->resultset('EncryptedClass')

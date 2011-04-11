@@ -8,7 +8,7 @@ use Sub::Name;
 
 __PACKAGE__->mk_classdata( '_column_encoders' );
 
-our $VERSION = '0.00010';
+our $VERSION = '0.00011';
 $VERSION = eval $VERSION;
 
 sub register_column {
@@ -113,7 +113,7 @@ In your L<DBIx::Class> Result class
   __PACKAGE__->add_columns(
     'password' => {
       data_type => 'CHAR',
-      size      => 22,
+      size      => 59,
       encode_column => 1,
       encode_class  => 'Crypt::Eksblowfish::Bcrypt',
       encode_args   => { key_nul => 0, cost => 8 },
@@ -240,9 +240,13 @@ and Marc Mims <marc@questright.com>
 
 =head1 CONTRIBUTORS
 
+jshirley - J. Shirley <cpan@coldhardcode.com>
+
 kentnl - Kent Fredric <kentnl@cpan.org>
 
 mst - Matt S Trout <mst@shadowcat.co.uk>
+
+wreis - Wallace reis <wreis@cpan.org>
 
 =head1 COPYRIGHT
 
