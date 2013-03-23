@@ -14,6 +14,7 @@ repository 'git://github.com/wreis/DBIx-Class-EncodedColumn.git';
 # Specific dependencies
 requires 'DBIx::Class' => '0.06002';
 requires 'Sub::Name' => '0.04';
+requires 'Encode';
 
 #build dependencies
 test_requires 'Test::More';
