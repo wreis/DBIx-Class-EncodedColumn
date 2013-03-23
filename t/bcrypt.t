@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use Test::More;
-
+use utf8;
 use Dir::Self;
 use File::Spec;
 use File::Temp 'tempdir';
@@ -10,7 +10,7 @@ use lib File::Spec->catdir(__DIR__, 'lib');
 
 BEGIN {
   if( eval 'require Crypt::Eksblowfish::Bcrypt' ){
-    plan tests => 7;
+    plan tests => 8;
     use_ok('DigestTest::Schema');
   } else {
     plan skip_all => 'Crypt::Eksblowfish::Bcrypt not available';
@@ -39,3 +39,7 @@ $row->bcrypt_2('test2');
 
 ok( $row->bcrypt_1_check('test2'));
 ok( $row->bcrypt_2_check('test2'));
+
+$row->bcrypt_1('官话');
+$row->update;
+ok($row->bcrypt_1_check('官话'));
