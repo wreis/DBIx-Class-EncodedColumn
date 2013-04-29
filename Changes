@@ -1,5 +1,7 @@
+0.00012 2013-04-29
+        - Fixes reported bug #78091. (gbjk++) 
 0.00011 2011-04-11
-    - Docs fixes
+        - Docs fixes
 0.00010	       2010-08-27
 	- Support for crypt()
 0.00009        2010-05-17
