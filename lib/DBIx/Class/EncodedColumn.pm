@@ -250,8 +250,8 @@ wreis - Wallace reis <wreis@cpan.org>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2008 - 2009 the DBIx::Class::EncodedColumn L</AUTHOR> and
-L</CONTRIBUTORS> as listed above.
+Copyright (c) the DBIx::Class::EncodedColumn L</AUTHOR> and L</CONTRIBUTORS> as
+listed above.
 
 =head1 LICENSE
 
