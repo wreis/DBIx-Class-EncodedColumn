@@ -3,6 +3,8 @@
 # Load the Module::Install bundled in ./inc/
 use inc::Module::Install;
 use Module::Install::ReadmeFromPod;
+use Module::Install::AuthorTests;
+use Module::Install::AuthorRequires;
 
 # Define metadata
 name 'DBIx-Class-EncodedColumn';
@@ -22,6 +24,10 @@ test_requires 'DBD::SQLite';
 test_requires 'Dir::Self';
 test_requires 'File::Temp';
 test_requires 'File::Spec';
+
+author_tests('t/author');
+author_requires 'Crypt::Eksblowfish::Bcrypt';
+author_requires 'DBIx::Class::TimeStamp';
 
 auto_install;
 
