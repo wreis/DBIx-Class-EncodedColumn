@@ -56,7 +56,7 @@ __END__;
 
 =head1 NAME
 
-DBIx::Class::EncodedColumn::Crypt::Eksblowfish::Bcrypt
+DBIx::Class::EncodedColumn::Crypt::Eksblowfish::Bcrypt - Eksblowfish bcrypt backend
 
 =head1 SYNOPSYS
 

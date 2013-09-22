@@ -78,7 +78,7 @@ __END__;
 
 =head1 NAME
 
-DBIx::Class::EncodedColumn::Digest
+DBIx::Class::EncodedColumn::Digest - Digest backend
 
 =head1 SYNOPSYS
 
