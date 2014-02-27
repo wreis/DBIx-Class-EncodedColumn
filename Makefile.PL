@@ -28,6 +28,8 @@ test_requires 'File::Spec';
 author_tests('t/author');
 author_requires 'Crypt::Eksblowfish::Bcrypt';
 author_requires 'DBIx::Class::TimeStamp';
+recommends 'Digest';
+recommends 'Digest::SHA';
 
 auto_install;
 
