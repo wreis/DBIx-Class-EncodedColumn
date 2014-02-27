@@ -1,3 +1,6 @@
+0.00013 2014-02-27
+        - Pod fixes (RT#88875)
+        - Fix deps (github#1)
 0.00012 2013-04-29
         - Fixes reported bug #78091. (gbjk++) 
 0.00011 2011-04-11
