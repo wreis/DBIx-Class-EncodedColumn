@@ -30,6 +30,9 @@ author_requires 'Crypt::Eksblowfish::Bcrypt';
 author_requires 'DBIx::Class::TimeStamp';
 recommends 'Digest';
 recommends 'Digest::SHA';
+recommends 'Crypt::OpenPGP';
+# TODO: remove once Crypt::OpenPGP is fixed
+recommends 'Math::Pari';
 
 auto_install;
 
