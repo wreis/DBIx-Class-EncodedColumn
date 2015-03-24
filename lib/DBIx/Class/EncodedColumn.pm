@@ -133,7 +133,11 @@ In your application code:
    $row->check_password('old_password'); #returns false
 
 
-B<Note:> The component needs to be loaded I<before> Core.
+B<Note:> The component needs to be loaded I<before> Core and other components
+such as Timestamp. Core should always be last.
+
+   E.g:
+   __PACKAGE__->load_components(qw/EncodedColumn TimeStamp Core/);
 
 =head1 DESCRIPTION
 
@@ -190,7 +194,7 @@ The class to use for encoding. Available classes are:
 =over 4
 
 =item C<Crypt::Eksblowfish::Bcrypt> - uses
-L<DBIx::Class::EncodedColumn::Crypt::Eksblowfish::Bcrypt> and 
+L<DBIx::Class::EncodedColumn::Crypt::Eksblowfish::Bcrypt> and
 requires L<Crypt::Eksblowfish::Bcrypt> to be installed
 
 =item C<Digest> - uses L<DBIx::Class::EncodedColumn::Digest>
