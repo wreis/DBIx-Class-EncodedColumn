@@ -62,7 +62,11 @@ SYNOPSIS
        $row->check_password('new_password'); #returns true
        $row->check_password('old_password'); #returns false
 
-    Note: The component needs to be loaded *before* Core.
+    Note: The component needs to be loaded *before* Core and other components
+    such as Timestamp. Core should always be last.
+
+       E.g:
+       __PACKAGE__->load_components(qw/EncodedColumn TimeStamp Core/);
 
 DESCRIPTION
     This DBIx::Class component can be used to automatically encode a
@@ -157,4 +161,3 @@ COPYRIGHT
 LICENSE
     This library is free software and may be distributed under the same
     terms as perl itself.
-

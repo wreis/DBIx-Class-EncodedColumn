@@ -1,7 +1,7 @@
--- 
+--
 -- Created by SQL::Translator::Producer::SQLite
 -- Created on Mon May 17 13:22:05 2010
--- 
+--
 
 
 BEGIN TRANSACTION;
@@ -46,6 +46,17 @@ CREATE TABLE test_whirlpool (
   id INTEGER PRIMARY KEY NOT NULL,
   whirlpool_hex char(128),
   whirlpool_b64 char(86)
+);
+
+--
+-- Table: test_timestamp_order
+--
+CREATE TABLE test_timestamp_order (
+  id INTEGER PRIMARY KEY NOT NULL,
+  username   TEXT NOT NULL,
+  password   TEXT NOT NULL,
+  created    TEXT,
+  updated    TEXT
 );
 
 COMMIT;
