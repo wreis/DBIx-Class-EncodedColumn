@@ -46,6 +46,7 @@ sub make_check_sub {
   #fast fast fast
   return eval qq^ sub {
     my \$col_v = \$_[0]->get_column('${col}');
+    return unless defined \$col_v;
     \$_[0]->_column_encoders->{${col}}->(\$_[1], \$col_v) eq \$col_v;
   } ^ || die($@);
 }
