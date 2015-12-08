@@ -81,6 +81,11 @@ sub make_encode_sub {
         $method_arg = $args->{recipient};
     }
 
+    my @cipher;
+    if ( defined $args->{cipher} ) {
+        @cipher = (Cipher => $args->{cipher});
+    }
+
     my $pgp = _get_pgp_obj_from_args($args);
 
     my $encoder = sub {
@@ -88,7 +93,8 @@ sub make_encode_sub {
         my $val = $pgp->encrypt(
             Data        => $plain_text,
             $method     => $method_arg,
-            Armour      => $armour
+            Armour      => $armour,
+            @cipher,
         );
         croak "Unable to encrypt $col; check $method parameter (is $method_arg) (and that the key is known)" unless $val;
         return $val;
