@@ -9,7 +9,8 @@ use lib File::Spec->catdir(__DIR__, 'lib');
 use DigestTest::Schema;
 
 BEGIN {
-  if( eval 'require Crypt::OpenPGP' && eval 'require Math::Pari' ){
+  my $math_pari = $ENV{'NO_MATH_PARI'} ? 1 : eval 'require Math::Pari';
+  if( eval 'require Crypt::OpenPGP' && $math_pari ){
     plan tests => 8;
   } else {
     plan skip_all => 'Crypt::OpenPGP not available';
