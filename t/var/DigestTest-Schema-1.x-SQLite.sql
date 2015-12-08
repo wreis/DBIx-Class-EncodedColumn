@@ -23,7 +23,8 @@ CREATE TABLE test_pgp (
   dummy_col char(43) NOT NULL,
   pgp_col_passphrase text,
   pgp_col_key text,
-  pgp_col_key_ps text
+  pgp_col_key_ps text,
+  pgp_col_rijndael256 text
 );
 
 --
