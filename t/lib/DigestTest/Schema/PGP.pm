@@ -62,6 +62,19 @@ __PACKAGE__->add_columns(
     },
     encode_check_method => 'decrypt_pgp_key_ps',
   },
+  pgp_col_rijndael256 => {
+    data_type => 'text',
+    is_nullable => 1,
+    encode_column => 1,
+    encode_class  => 'Crypt::OpenPGP',
+    encode_args => {
+      passphrase => 'Secret Words',
+      armour     => 1,
+      pgp_args   => $pgp_conf,
+      cipher     => 'Rijndael256',
+    },
+    encode_check_method => 'decrypt_pgp_rijndael256',
+  },
 );
 
 __PACKAGE__->set_primary_key('id');

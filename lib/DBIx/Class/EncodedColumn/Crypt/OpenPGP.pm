@@ -67,6 +67,13 @@ Also, remember to keep your private keys secure!
 
 =cut
 
+my %VALID_ENCODE_ARGS = (
+    'compat'   => 'Compat',
+    'cipher'   => 'Cipher',
+    'compress' => 'Compress',
+    'mdc'      => 'MDC',
+);
+
 sub make_encode_sub {
     my ( $class, $col, $args ) = @_;
 
@@ -81,6 +88,13 @@ sub make_encode_sub {
         $method_arg = $args->{recipient};
     }
 
+    my @other;
+    for my $opt (keys %VALID_ENCODE_ARGS) {
+        if ( defined $args->{$opt} ) {
+            push @other, $VALID_ENCODE_ARGS{$opt} => $args->{$opt};
+        }
+    }
+
     my $pgp = _get_pgp_obj_from_args($args);
 
     my $encoder = sub {
@@ -88,7 +102,8 @@ sub make_encode_sub {
         my $val = $pgp->encrypt(
             Data        => $plain_text,
             $method     => $method_arg,
-            Armour      => $armour
+            Armour      => $armour,
+            @other,
         );
         croak "Unable to encrypt $col; check $method parameter (is $method_arg) (and that the key is known)" unless $val;
         return $val;

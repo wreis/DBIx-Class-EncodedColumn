@@ -9,8 +9,9 @@ use lib File::Spec->catdir(__DIR__, 'lib');
 use DigestTest::Schema;
 
 BEGIN {
-  if( eval 'require Crypt::OpenPGP' && eval 'require Math::Pari' ){
-    plan tests => 6;
+  my $math_pari = $ENV{'NO_MATH_PARI'} ? 1 : eval 'require Math::Pari';
+  if( eval 'require Crypt::OpenPGP' && $math_pari ){
+    plan tests => 8;
   } else {
     plan skip_all => 'Crypt::OpenPGP not available';
     exit;
@@ -26,15 +27,17 @@ my $schema = DigestTest::Schema->connect("dbi:SQLite:dbname=${db_file}");
 $schema->deploy({}, File::Spec->catdir(__DIR__, 'var'));
 
 my $row = $schema->resultset('PGP')->create( {
-  dummy_col          => 'Dummy Column',
-  pgp_col_passphrase => 'Test Encrypted Column with Passphrase',
-  pgp_col_key        => 'Test Encrypted Column with Key Exchange',
-  pgp_col_key_ps     => 'Test Encrypted Column with Key Exchange + Pass',
+  dummy_col           => 'Dummy Column',
+  pgp_col_passphrase  => 'Test Encrypted Column with Passphrase',
+  pgp_col_key         => 'Test Encrypted Column with Key Exchange',
+  pgp_col_key_ps      => 'Test Encrypted Column with Key Exchange + Pass',
+  pgp_col_rijndael256 => 'Test Encrypted Column with Rijndael256 Cipher',
 } );
 
 like($row->pgp_col_passphrase, qr/BEGIN PGP MESSAGE/, 'Passphrase encrypted');
 like($row->pgp_col_key, qr/BEGIN PGP MESSAGE/, 'Key encrypted');
 like($row->pgp_col_key_ps, qr/BEGIN PGP MESSAGE/, 'Key+Passphrase encrypted');
+like($row->pgp_col_rijndael256, qr/BEGIN PGP MESSAGE/, 'Rijndael encrypted');
 
 is(
   $row->decrypt_pgp_passphrase('Secret Words'),
@@ -52,4 +55,10 @@ is(
   $row->decrypt_pgp_key_ps('Secret Words'),
   'Test Encrypted Column with Key Exchange + Pass',
   'Secured Key Exchange decryption/encryption'
+);
+
+is(
+  $row->decrypt_pgp_rijndael256('Secret Words'),
+  'Test Encrypted Column with Rijndael256 Cipher',
+  'Passphrase decryption/encryption with Rijndael256 Cipher'
 );
