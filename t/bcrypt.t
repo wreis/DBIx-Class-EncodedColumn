@@ -9,7 +9,7 @@ use lib File::Spec->catdir(__DIR__, 'lib');
 
 BEGIN {
   if( eval 'require Crypt::Eksblowfish::Bcrypt' ){
-    plan tests => 8;
+    plan tests => 12;
     use_ok('DigestTest::Schema');
   } else {
     plan skip_all => 'Crypt::Eksblowfish::Bcrypt not available';
@@ -42,3 +42,14 @@ ok( $row->bcrypt_2_check('test2'));
 $row->bcrypt_1('官话');
 $row->update;
 ok($row->bcrypt_1_check('官话'));
+
+# setting to undef avoids call to make_encode_sub
+$row->bcrypt_1(undef);
+$row->bcrypt_2(undef);
+
+is( $row->bcrypt_1, undef, 'is undef' );
+is( $row->bcrypt_2, undef, 'is undef' );
+
+ok( !$row->bcrypt_1_check(undef), "encode_check_method fails for undef");
+ok( !$row->bcrypt_2_check(undef), "encode_check_method fails for undef");
+
