@@ -1,3 +1,6 @@
+0.00014 2016-05-31
+        - prevent warning in ::Bcrypt when password is undef
+        - Allow users to specify the Cipher used when encoding
 0.00013 2014-02-27
         - Pod fixes (RT#88875)
         - Fix deps (github#1)
