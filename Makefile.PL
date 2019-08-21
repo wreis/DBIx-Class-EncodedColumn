@@ -1,5 +1,6 @@
 #! /usr/bin/perl -w
 
+use lib '.';
 # Load the Module::Install bundled in ./inc/
 use inc::Module::Install;
 use Module::Install::ReadmeFromPod;
