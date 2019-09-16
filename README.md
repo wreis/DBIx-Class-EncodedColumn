@@ -4,159 +4,152 @@ DBIx::Class::EncodedColumn - Automatically encode columns
 
 # SYNOPSIS
 
-In your DBIx::Class Result class (sometimes erroneously referred to as
-the 'table' class):
+In your [DBIx::Class](https://metacpan.org/pod/DBIx::Class) Result class
+(sometimes erroneously referred to as the 'table' class):
 
-      __PACKAGE__->load_components(qw/EncodedColumn ... Core/);
+    __PACKAGE__->load_components(qw/EncodedColumn ... Core/);
 
-      #Digest encoder with hex format and SHA-1 algorithm
-      __PACKAGE__->add_columns(
-        'password' => {
-          data_type     => 'CHAR',
-          size          => 40,
-          encode_column => 1,
-          encode_class  => 'Digest',
-          encode_args   => {algorithm => 'SHA-1', format => 'hex'},
-      }
+    #Digest encoder with hex format and SHA-1 algorithm
+    __PACKAGE__->add_columns(
+      'password' => {
+        data_type     => 'CHAR',
+        size          => 40,
+        encode_column => 1,
+        encode_class  => 'Digest',
+        encode_args   => {algorithm => 'SHA-1', format => 'hex'},
+    }
 
-      #SHA-1 / hex encoding / generate check method
-      __PACKAGE__->add_columns(
-        'password' => {
-          data_type   => 'CHAR',
-          size        => 40 + 10,
-          encode_column => 1,
-          encode_class  => 'Digest',
-          encode_args   => {algorithm => 'SHA-1', format => 'hex', salt_length => 10},
-          encode_check_method => 'check_password',
-      }
+    #SHA-1 / hex encoding / generate check method
+    __PACKAGE__->add_columns(
+      'password' => {
+        data_type   => 'CHAR',
+        size        => 40 + 10,
+        encode_column => 1,
+        encode_class  => 'Digest',
+        encode_args   => {algorithm => 'SHA-1', format => 'hex', salt_length => 10},
+        encode_check_method => 'check_password',
+    }
 
-      #MD5 /  base64 encoding / generate check method
-      __PACKAGE__->add_columns(
-        'password' => {
-          data_type => 'CHAR',
-          size      => 22,
-          encode_column => 1,
-          encode_class  => 'Digest',
-          encode_args   => {algorithm => 'MD5', format => 'base64'},
-          encode_check_method => 'check_password',
-      }
+    #MD5 /  base64 encoding / generate check method
+    __PACKAGE__->add_columns(
+      'password' => {
+        data_type => 'CHAR',
+        size      => 22,
+        encode_column => 1,
+        encode_class  => 'Digest',
+        encode_args   => {algorithm => 'MD5', format => 'base64'},
+        encode_check_method => 'check_password',
+    }
 
-      #Eksblowfish bcrypt / cost of 8/ no key_nul / generate check method
-      __PACKAGE__->add_columns(
-        'password' => {
-          data_type => 'CHAR',
-          size      => 59,
-          encode_column => 1,
-          encode_class  => 'Crypt::Eksblowfish::Bcrypt',
-          encode_args   => { key_nul => 0, cost => 8 },
-          encode_check_method => 'check_password',
-      }
+    #Eksblowfish bcrypt / cost of 8/ no key_nul / generate check method
+    __PACKAGE__->add_columns(
+      'password' => {
+        data_type => 'CHAR',
+        size      => 59,
+        encode_column => 1,
+        encode_class  => 'Crypt::Eksblowfish::Bcrypt',
+        encode_args   => { key_nul => 0, cost => 8 },
+        encode_check_method => 'check_password',
+    }
 
 In your application code:
 
-       #updating the value.
-       $row->password('plaintext');
-       my $digest = $row->password;
+    #updating the value.
+    $row->password('plaintext');
+    my $digest = $row->password;
 
-       #checking against an existing value with a check_method
-       $row->check_password('old_password'); #true
-       $row->password('new_password');
-       $row->check_password('new_password'); #returns true
-       $row->check_password('old_password'); #returns false
+    #checking against an existing value with a check_method
+    $row->check_password('old_password'); #true
+    $row->password('new_password');
+    $row->check_password('new_password'); #returns true
+    $row->check_password('old_password'); #returns false
 
-Note: The component needs to be loaded *before* Core and other components
+**Note:** The component needs to be loaded _before_ Core and other components
 such as Timestamp. Core should always be last.
 
-       E.g:
-       __PACKAGE__->load_components(qw/EncodedColumn TimeStamp Core/);
+    E.g:
+    __PACKAGE__->load_components(qw/EncodedColumn TimeStamp Core/);
 
 # DESCRIPTION
 
-This DBIx::Class component can be used to automatically encode a
-column's contents whenever the value of that column is set.
+This [DBIx::Class](https://metacpan.org/pod/DBIx::Class) component can be used to automatically encode a column's
+contents whenever the value of that column is set.
 
-This module is similar to the existing DBIx::Class::DigestColumns, but
-there is some key differences:
+This module is similar to the existing [DBIx::Class::DigestColumns](https://metacpan.org/pod/DBIx::Class::DigestColumns), but there
+is some key differences:
 
-"DigestColumns" performs the encode operation on "insert" and "update",
-and "EncodedColumn" performs the operation when the value is set, or on
-"new".
-"DigestColumns" supports only algorithms of the Digest family.
-"EncodedColumn" employs a set of thin wrappers around different cipher
-modules to provide support for any cipher you wish to use and wrappers
-are very simple to write (typically less than 30 lines).
-"EncodedColumn" supports having more than one encoded column per table
+- `DigestColumns` performs the encode operation on `insert` and `update`,
+and `EncodedColumn` performs the operation when the value is set, or on `new`.
+- `DigestColumns` supports only algorithms of the [Digest](https://metacpan.org/pod/Digest) family.
+`EncodedColumn` employs a set of thin wrappers around different cipher modules
+to provide support for any cipher you wish to use and wrappers are very simple
+to write (typically less than 30 lines).
+- `EncodedColumn` supports having more than one encoded column per table
 and each column can use a different cipher.
-"Encode" adds only one item to the namespace of the object utilizing it
-("_column_encoders").
+- `Encode` adds only one item to the namespace of the object utilizing
+it (`_column_encoders`).
 
-There is, unfortunately, some features that "EncodedColumn" doesn't
-support. "DigestColumns" supports changing certain options at runtime,
-as well as the option to not automatically encode values on set. The
-author of this module found these options to be non-essential and
-omitted them by design.
+There is, unfortunately, some features that `EncodedColumn` doesn't support.
+`DigestColumns` supports changing certain options at runtime, as well as
+the option to not automatically encode values on set. The author of this module
+found these options to be non-essential and omitted them by design.
 
-# Options added to add_column
+# Options added to add\_column
 
-If any one of these options is present the column will be treated as a
-digest column and all of the defaults will be applied to the rest of the
-options.
+## encode\_column => 1
 
-##  encode_enable => 1
+Enable automatic encoding of column values. If this option is not set to true
+any other options will become no-ops.
 
-Enable automatic encoding of column values. If this option is not set to
-true any other options will become no-ops.
+## encode\_check\_method => $method\_name
 
-##  encode_check_method => $method_name
+By using the encode\_check\_method attribute when you declare a column you
+can create a check method for that column. The check method accepts a plain
+text string, and returns a boolean that indicates whether the digest of the
+provided value matches the current value.
 
-By using the encode_check_method attribute when you declare a column you
-can create a check method for that column. The check method accepts a
-plain text string, and returns a boolean that indicates whether the
-digest of the provided value matches the current value.
+## encode\_class
 
-##  encode_class
- 
-he class to use for encoding. Available classes are:
+The class to use for encoding. Available classes are:
 
-"Crypt::Eksblowfish::Bcrypt" - uses
-DBIx::Class::EncodedColumn::Crypt::Eksblowfish::Bcrypt and requires
-Crypt::Eksblowfish::Bcrypt to be installed
-"Digest" - uses DBIx::Class::EncodedColumn::Digest requires Digest to be
-installed as well as the algorithm required (Digest::SHA,
-Digest::Whirlpool, etc)
-"Crypt::OpenPGP" - DBIx::Class::EncodedColumn::Crypt::OpenPGP and
-requires Crypt::OpenPGP to be installed
+- `Crypt::Eksblowfish::Bcrypt` - uses
+[DBIx::Class::EncodedColumn::Crypt::Eksblowfish::Bcrypt](https://metacpan.org/pod/DBIx::Class::EncodedColumn::Crypt::Eksblowfish::Bcrypt) and
+requires [Crypt::Eksblowfish::Bcrypt](https://metacpan.org/pod/Crypt::Eksblowfish::Bcrypt) to be installed
+- `Digest` - uses [DBIx::Class::EncodedColumn::Digest](https://metacpan.org/pod/DBIx::Class::EncodedColumn::Digest)
+requires [Digest](https://metacpan.org/pod/Digest) to be installed as well as the algorithm required
+([Digest::SHA](https://metacpan.org/pod/Digest::SHA), [Digest::Whirlpool](https://metacpan.org/pod/Digest::Whirlpool), etc)
+- `Crypt::OpenPGP` - [DBIx::Class::EncodedColumn::Crypt::OpenPGP](https://metacpan.org/pod/DBIx::Class::EncodedColumn::Crypt::OpenPGP)
+and requires [Crypt::OpenPGP](https://metacpan.org/pod/Crypt::OpenPGP) to be installed
 
 Please see the relevant class's documentation for information about the
-specific arguments accepted by each and make sure you include the
-encoding algorithm (e.g. Crypt::OpenPGP) in your application's
-requirements.
+specific arguments accepted by each and make sure you include the encoding
+algorithm (e.g. [Crypt::OpenPGP](https://metacpan.org/pod/Crypt::OpenPGP)) in your application's requirements.
 
 # EXTENDED METHODS
 
-The following DBIx::Class::ResultSource method is extended:
+The following [DBIx::Class::ResultSource](https://metacpan.org/pod/DBIx::Class::ResultSource) method is extended:
 
-## register_column - Handle the options described above.
+- **register\_column** - Handle the options described above.
 
-The following DBIx::Class::Row methods are extended by this module:
+The following [DBIx::Class::Row](https://metacpan.org/pod/DBIx::Class::Row) methods are extended by this module:
 
-##  new - Encode the columns on new() so that copy and create DWIM.
-##  set_column - Encode values whenever column is set.
+- **new** - Encode the columns on new() so that copy and create DWIM.
+- **set\_column** - Encode values whenever column is set.
 
 # SEE ALSO
 
-DBIx::Class::DigestColumns, DBIx::Class, Digest
+[DBIx::Class::DigestColumns](https://metacpan.org/pod/DBIx::Class::DigestColumns), [DBIx::Class](https://metacpan.org/pod/DBIx::Class), [Digest](https://metacpan.org/pod/Digest)
 
 # AUTHOR
 
 Guillermo Roditi (groditi) <groditi@cpan.org>
 
-Inspired by the original module written by Tom Kirkpatrick (tkp)
-<tkp@cpan.org> featuring contributions from Guillermo Roditi (groditi)
-<groditi@cpan.org> and Marc Mims <marc@questright.com>
+Inspired by the original module written by Tom Kirkpatrick (tkp) <tkp@cpan.org>
+featuring contributions from Guillermo Roditi (groditi) <groditi@cpan.org>
+and Marc Mims <marc@questright.com>
 
 # CONTRIBUTORS
- 
+
 jshirley - J. Shirley <cpan@coldhardcode.com>
 
 kentnl - Kent Fredric <kentnl@cpan.org>
@@ -165,12 +158,12 @@ mst - Matt S Trout <mst@shadowcat.co.uk>
 
 wreis - Wallace reis <wreis@cpan.org>
 
-#COPYRIGHT
+# COPYRIGHT
 
-Copyright (c) the DBIx::Class::EncodedColumn "AUTHOR" and "CONTRIBUTORS"
-as listed above.
+Copyright (c) the DBIx::Class::EncodedColumn ["AUTHOR"](#author) and ["CONTRIBUTORS"](#contributors) as
+listed above.
 
 # LICENSE
- 
-This library is free software and may be distributed under the same
-terms as perl itself.
+
+This library is free software and may be distributed under the same terms
+as perl itself.
