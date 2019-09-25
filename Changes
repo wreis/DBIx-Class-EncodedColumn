@@ -1,4 +1,4 @@
-Revision history for Message-Passing-Fluentd
+Revision history for DBIx-Class-EncodedColumn
 
 0.00020 2019-09-25
         - Skip author tests unless AUTHOR_TESTING is set
