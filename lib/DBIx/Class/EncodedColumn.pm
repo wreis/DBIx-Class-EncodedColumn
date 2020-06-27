@@ -247,7 +247,7 @@ kentnl - Kent Fredric <kentnl@cpan.org>
 
 mst - Matt S Trout <mst@shadowcat.co.uk>
 
-wreis - Wallace reis <wreis@cpan.org>
+wreis - Wallace Reis <wreis@cpan.org>
 
 =head1 COPYRIGHT
 
