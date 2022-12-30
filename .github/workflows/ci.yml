@@ -1,0 +1,43 @@
+name: CI
+
+on: [push, pull_request]
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        perl: [ '5.10', '5.20', '5.30', '5.36', '5.36-threaded' ]
+        # See options here: https://hub.docker.com/_/perl/tags
+
+    runs-on: ubuntu-latest
+    name: perl ${{matrix.perl}}
+    container: perl:${{matrix.perl}}
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Show perl version
+      run: |
+        perl -v
+    - name: Install modules
+      run: |
+        #cpanm --quiet --notest Devel::Cover::Report::Coveralls
+        cpanm --notest --quiet Crypt::Random  # Needed by Crypt::OpenPGP
+
+        # Needed to test DBIx::Class::EncodedColumn::Crypt::OpenPGP
+        cpanm --notest --quiet Crypt::OpenPGP
+
+        # Needed to test DBIx::Class::EncodedColumn::Crypt::Eksblowfish::Bcrypt
+        cpanm --notest --quiet Crypt::Eksblowfish::Bcrypt
+
+        cpanm --notest --quiet DBIx::Class::TimeStamp
+        cpanm --notest --quiet Digest::Whirlpool
+        cpanm --installdeps --quiet --notest .
+    - name: Build module and execute tests
+      env:
+        AUTHOR_TESTING: 1
+        RELEASE_TESTING: 1
+      run: |
+        perl Build.PL
+        ./Build
+        ./Build test
+        #cover -test -report coveralls
