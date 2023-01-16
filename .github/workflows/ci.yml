@@ -36,6 +36,8 @@ jobs:
       env:
         AUTHOR_TESTING: 1
         RELEASE_TESTING: 1
+        # token needed by coveralls, see https://github.com/marketplace/actions/coveralls-github-action
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         perl Build.PL
         ./Build
