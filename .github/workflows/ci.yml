@@ -20,7 +20,7 @@ jobs:
         perl -v
     - name: Install modules
       run: |
-        #cpanm --quiet --notest Devel::Cover::Report::Coveralls
+        cpanm --quiet --notest Devel::Cover::Report::Coveralls
         cpanm --notest --quiet Crypt::Random  # Needed by Crypt::OpenPGP
 
         # Needed to test DBIx::Class::EncodedColumn::Crypt::OpenPGP
@@ -40,4 +40,4 @@ jobs:
         perl Build.PL
         ./Build
         ./Build test
-        #cover -test -report coveralls
+        cover -test -report coveralls
