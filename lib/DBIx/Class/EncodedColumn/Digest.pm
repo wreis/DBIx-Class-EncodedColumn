@@ -6,7 +6,7 @@ use Digest;
 use Encode qw( str2bytes );
 use Crypt::URandom::Token qw( urandom_token );
 
-our $VERSION = '0.00001';
+our $VERSION = '0.11';
 
 my %digest_lengths =
   (

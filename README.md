@@ -4,7 +4,7 @@ DBIx::Class::EncodedColumn - Automatically encode columns
 
 # SYNOPSIS
 
-In your [DBIx::Class](https://metacpan.org/pod/DBIx::Class) Result class
+In your [DBIx::Class](https://metacpan.org/pod/DBIx%3A%3AClass) Result class
 (sometimes erroneously referred to as the 'table' class):
 
     __PACKAGE__->load_components(qw/EncodedColumn ... Core/);
@@ -72,10 +72,10 @@ such as Timestamp. Core should always be last.
 
 # DESCRIPTION
 
-This [DBIx::Class](https://metacpan.org/pod/DBIx::Class) component can be used to automatically encode a column's
+This [DBIx::Class](https://metacpan.org/pod/DBIx%3A%3AClass) component can be used to automatically encode a column's
 contents whenever the value of that column is set.
 
-This module is similar to the existing [DBIx::Class::DigestColumns](https://metacpan.org/pod/DBIx::Class::DigestColumns), but there
+This module is similar to the existing [DBIx::Class::DigestColumns](https://metacpan.org/pod/DBIx%3A%3AClass%3A%3ADigestColumns), but there
 is some key differences:
 
 - `DigestColumns` performs the encode operation on `insert` and `update`,
@@ -113,32 +113,32 @@ provided value matches the current value.
 The class to use for encoding. Available classes are:
 
 - `Crypt::Eksblowfish::Bcrypt` - uses
-[DBIx::Class::EncodedColumn::Crypt::Eksblowfish::Bcrypt](https://metacpan.org/pod/DBIx::Class::EncodedColumn::Crypt::Eksblowfish::Bcrypt) and
-requires [Crypt::Eksblowfish::Bcrypt](https://metacpan.org/pod/Crypt::Eksblowfish::Bcrypt) to be installed
-- `Digest` - uses [DBIx::Class::EncodedColumn::Digest](https://metacpan.org/pod/DBIx::Class::EncodedColumn::Digest)
+[DBIx::Class::EncodedColumn::Crypt::Eksblowfish::Bcrypt](https://metacpan.org/pod/DBIx%3A%3AClass%3A%3AEncodedColumn%3A%3ACrypt%3A%3AEksblowfish%3A%3ABcrypt) and
+requires [Crypt::Eksblowfish::Bcrypt](https://metacpan.org/pod/Crypt%3A%3AEksblowfish%3A%3ABcrypt) to be installed
+- `Digest` - uses [DBIx::Class::EncodedColumn::Digest](https://metacpan.org/pod/DBIx%3A%3AClass%3A%3AEncodedColumn%3A%3ADigest)
 requires [Digest](https://metacpan.org/pod/Digest) to be installed as well as the algorithm required
-([Digest::SHA](https://metacpan.org/pod/Digest::SHA), [Digest::Whirlpool](https://metacpan.org/pod/Digest::Whirlpool), etc)
-- `Crypt::OpenPGP` - [DBIx::Class::EncodedColumn::Crypt::OpenPGP](https://metacpan.org/pod/DBIx::Class::EncodedColumn::Crypt::OpenPGP)
-and requires [Crypt::OpenPGP](https://metacpan.org/pod/Crypt::OpenPGP) to be installed
+([Digest::SHA](https://metacpan.org/pod/Digest%3A%3ASHA), [Digest::Whirlpool](https://metacpan.org/pod/Digest%3A%3AWhirlpool), etc)
+- `Crypt::OpenPGP` - [DBIx::Class::EncodedColumn::Crypt::OpenPGP](https://metacpan.org/pod/DBIx%3A%3AClass%3A%3AEncodedColumn%3A%3ACrypt%3A%3AOpenPGP)
+and requires [Crypt::OpenPGP](https://metacpan.org/pod/Crypt%3A%3AOpenPGP) to be installed
 
 Please see the relevant class's documentation for information about the
 specific arguments accepted by each and make sure you include the encoding
-algorithm (e.g. [Crypt::OpenPGP](https://metacpan.org/pod/Crypt::OpenPGP)) in your application's requirements.
+algorithm (e.g. [Crypt::OpenPGP](https://metacpan.org/pod/Crypt%3A%3AOpenPGP)) in your application's requirements.
 
 # EXTENDED METHODS
 
-The following [DBIx::Class::ResultSource](https://metacpan.org/pod/DBIx::Class::ResultSource) method is extended:
+The following [DBIx::Class::ResultSource](https://metacpan.org/pod/DBIx%3A%3AClass%3A%3AResultSource) method is extended:
 
 - **register\_column** - Handle the options described above.
 
-The following [DBIx::Class::Row](https://metacpan.org/pod/DBIx::Class::Row) methods are extended by this module:
+The following [DBIx::Class::Row](https://metacpan.org/pod/DBIx%3A%3AClass%3A%3ARow) methods are extended by this module:
 
 - **new** - Encode the columns on new() so that copy and create DWIM.
 - **set\_column** - Encode values whenever column is set.
 
 # SEE ALSO
 
-[DBIx::Class::DigestColumns](https://metacpan.org/pod/DBIx::Class::DigestColumns), [DBIx::Class](https://metacpan.org/pod/DBIx::Class), [Digest](https://metacpan.org/pod/Digest)
+[DBIx::Class::DigestColumns](https://metacpan.org/pod/DBIx%3A%3AClass%3A%3ADigestColumns), [DBIx::Class](https://metacpan.org/pod/DBIx%3A%3AClass), [Digest](https://metacpan.org/pod/Digest)
 
 # AUTHOR
 
@@ -156,7 +156,7 @@ kentnl - Kent Fredric <kentnl@cpan.org>
 
 mst - Matt S Trout <mst@shadowcat.co.uk>
 
-wreis - Wallace reis <wreis@cpan.org>
+wreis - Wallace Reis <wreis@cpan.org>
 
 # COPYRIGHT
 

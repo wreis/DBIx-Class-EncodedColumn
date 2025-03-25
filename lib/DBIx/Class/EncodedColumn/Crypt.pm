@@ -3,7 +3,7 @@ package DBIx::Class::EncodedColumn::Crypt;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.11';
 
 sub make_encode_sub {
     my ($class, $col, $args) = @_;
