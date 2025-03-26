@@ -6,7 +6,7 @@ use warnings;
 use Carp;
 use Crypt::OpenPGP;
 
-our $VERSION = '0.01';
+our $VERSION = '0.11';
 
 =head1 NAME
 

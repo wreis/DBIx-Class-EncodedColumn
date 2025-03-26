@@ -1,5 +1,7 @@
 Revision history for DBIx-Class-EncodedColumn
 
+0.11 2025-03-26
+        - Use secure random source for salts
 0.00020 2019-09-25
         - Skip author tests unless AUTHOR_TESTING is set
 0.00019 2019-09-19

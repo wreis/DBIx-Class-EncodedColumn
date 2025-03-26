@@ -6,7 +6,7 @@ use Crypt::Eksblowfish::Bcrypt ();
 use Crypt::URandom qw( urandom );
 use Encode qw(is_utf8 encode_utf8);
 
-our $VERSION = '0.00001';
+our $VERSION = '0.11';
 
 sub make_encode_sub {
   my($class, $col, $args) = @_;

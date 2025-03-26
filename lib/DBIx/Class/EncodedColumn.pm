@@ -8,7 +8,7 @@ use Sub::Name;
 
 __PACKAGE__->mk_classdata( '_column_encoders' );
 
-our $VERSION = '0.00020';
+our $VERSION = '0.11';
 $VERSION = eval $VERSION;
 
 sub register_column {
